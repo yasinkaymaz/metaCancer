@@ -1,5 +1,3 @@
 # metaCancer
 
-
-
-[Results]: https://yasinkaymaz.github.io/metaCancer/index.html
+https://yasinkaymaz.github.io/metaCancer/index.html
