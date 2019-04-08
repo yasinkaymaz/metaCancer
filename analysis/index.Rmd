@@ -6,4 +6,5 @@ output:
     toc: false
 ---
 
-Welcome to my research website.
+Welcome to our research website.
+For details about the analysis and codes, please check the github repository [metaCancer](https://github.com/yasinkaymaz/metaCancer).
