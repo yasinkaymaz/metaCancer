@@ -1,5 +1,5 @@
 # metaCancer
 
-A [workflowr][] project.
 
-[workflowr]: https://github.com/jdblischak/workflowr
+
+[Results]: https://yasinkaymaz.github.io/metaCancer/
