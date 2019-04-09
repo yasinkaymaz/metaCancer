@@ -1,0 +1,62 @@
+---
+title: "DimensionReduction_Clustering"
+author: "Yasin Kaymaz"
+date: "04/09/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plotly)
+library(DT)
+options(width = 80)
+source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/functions.R")
+```
+
+```{r echo=FALSE}
+load("~/data/TCGA/LungCancer.seurat.Robj")
+Lc <- SeuratObj
+rm(SeuratObj)
+```
+
+## Clustering analysis of all samples in the study
+
+In each of these plots, colored dots represent individual sample. Analysis was done using only highly variable genes. Sample annotation are projected from the data repository.
+
+
+
+### **PCA plots**
+
+```{r echo=FALSE, fig.height=8, fig.width=10}
+
+PCAPlot(Lc,group.by="primary_diagnosis",pt.size=2)
+PCAPlot(Lc,group.by="project_id.y",pt.size=2)
+PCAPlot(Lc,group.by="gender",pt.size=2)
+```
+
+
+### **tSNE plots**
+
+```{r echo=FALSE, fig.height=8, fig.width=10}
+TSNEPlot(Lc, group.by="res.1")
+TSNEPlot(Lc, group.by="Sample.Type")
+TSNEPlot(Lc, group.by="gender")
+TSNEPlot(Lc, group.by="race")
+TSNEPlot(Lc, group.by="ethnicity")
+TSNEPlot(Lc, group.by="primary_diagnosis")
+TSNEPlot(Lc, group.by="tumor_stage")
+TSNEPlot(Lc, group.by="vital_status")
+TSNEPlot(Lc, group.by="tissue_or_organ_of_origin")
+TSNEPlot(Lc, group.by="project_id.y")
+
+```
+
+.
+
+.
+
+.
+
+.
+
+.
