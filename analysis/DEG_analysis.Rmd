@@ -14,7 +14,7 @@ source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/fun
 ```
 
 ```{r echo=FALSE}
-load("~/data/TCGA/LungCancerGDC.sub.seurat.Robj")
+#load("~/data/TCGA/LungCancerGDC.sub.seurat.Robj")
 load("~/data/TCGA/DEGs.paired.Rdata")
 ```
 
