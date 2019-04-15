@@ -14,9 +14,7 @@ source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/fun
 ```
 
 ```{r echo=FALSE}
-load("~/data/TCGA/LungCancer.seurat.Robj")
-Lc <- SeuratObj
-rm(SeuratObj)
+load("~/data/TCGA/LungCancerGDC.sub.seurat.Robj")
 ```
 
 ## Clustering analysis of all samples in the study
@@ -27,29 +25,33 @@ In each of these plots, colored dots represent individual sample. Analysis was d
 
 ### **PCA plots**
 
+Principal components analysis of RNAseq data of tumor/normal tissues from patients diagnoses either with Adenocarcinoma or Squamous cell carcinoma.
+
 ```{r echo=FALSE, fig.height=8, fig.width=10}
 
-PCAPlot(Lc,group.by="primary_diagnosis",pt.size=2)
-PCAPlot(Lc,group.by="project_id.y",pt.size=2)
-PCAPlot(Lc,group.by="gender",pt.size=2)
+PCAPlot(Lc.sub, group.by="name", pt.size=2)
+PCAPlot(Lc.sub, group.by="definition", pt.size=2)
 ```
 
 
-### **tSNE plots**
+### **UMAP plots**
+
+Uniform Manifold Approximation and Projection (UMAP) plots of samples based on highly variable genes. Each dot represents a sample colored by various sample/patient clinicial feature. 
 
 ```{r echo=FALSE, fig.height=8, fig.width=10}
-TSNEPlot(Lc, group.by="res.1")
-TSNEPlot(Lc, group.by="Sample.Type")
-TSNEPlot(Lc, group.by="gender")
-TSNEPlot(Lc, group.by="race")
-TSNEPlot(Lc, group.by="ethnicity")
-TSNEPlot(Lc, group.by="primary_diagnosis")
-TSNEPlot(Lc, group.by="tumor_stage")
-TSNEPlot(Lc, group.by="vital_status")
-TSNEPlot(Lc, group.by="tissue_or_organ_of_origin")
-TSNEPlot(Lc, group.by="project_id.y")
-
+DimPlot(object = Lc.sub, reduction = "umap", group.by="gender", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="name", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="definition", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="ClassType", pt.size=2)#--> The most informative
+DimPlot(object = Lc.sub, reduction = "umap", group.by="race", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="ethnicity", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="primary_diagnosis", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="tumor_stage", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="vital_status", pt.size=2)
+DimPlot(object = Lc.sub, reduction = "umap", group.by="tissue_or_organ_of_origin", pt.size=2)
 ```
+
+
 
 .
 

@@ -1,0 +1,42 @@
+---
+title: "DifferentialGeneExpression"
+author: "Yasin Kaymaz"
+date: "4/15/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(plotly)
+library(DT)
+options(width = 80)
+source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/functions.R")
+```
+
+```{r echo=FALSE}
+load("~/data/TCGA/LungCancerGDC.sub.seurat.Robj")
+load("~/data/TCGA/DEGs.paired.Rdata")
+```
+
+```{r echo=FALSE}
+#Plots
+p1 <- ggplot(scc.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
+  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
+  scale_color_gradient(low="lightblue", high="red")+
+  labs(title="Normal vs SCC")
+ggplotly(p1)
+
+p2 <- ggplot(ac.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
+  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
+  scale_color_gradient(low="darkgreen", high="lightblue")+
+  labs(title="AC vs Normal")
+ggplotly(p2)
+
+p3 <- ggplot(ac.vs.scc, aes(avg_logFC, -log10( p_val_adj) ))+
+  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
+  scale_color_gradient(low="red", high="darkgreen")+
+  labs(title="SCC vs AC")
+ggplotly(p3)
+```
+
+
