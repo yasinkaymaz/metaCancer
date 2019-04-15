@@ -8,7 +8,9 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(plotly)
+library(TCGAbiolinks)
 library(DT)
+library(SummarizedExperiment)
 options(width = 80)
 source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/functions.R")
 ```
@@ -18,19 +20,18 @@ source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/fun
 load("~/data/TCGA/DEGs.paired.Rdata")
 ```
 
-```{r echo=FALSE, warning=FALSE}
-#Plots
-p1 <- ggplot(scc.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
-  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
-  scale_color_gradient(low="lightblue", high="red")+
-  labs(title="Normal vs SCC")
-ggplotly(p1)
+## Differential Gene Expression, Pathway Enrichment & Gene onthology analysis
 
-p2 <- ggplot(ac.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
-  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
-  scale_color_gradient(low="darkgreen", high="lightblue")+
-  labs(title="AC vs Normal")
-ggplotly(p2)
+```{r warning=FALSE, include=FALSE}
+
+#Gene ontology and Pathway Enrichment Analysis:
+ansEA.ac.scc <- TCGAanalyze_EAcomplete(TFname="DEA genes of AC vs SCC", RegulonList = ac.vs.scc$gene)
+ansEA.ac.norm <- TCGAanalyze_EAcomplete(TFname="DEA genes of Adenocarcinoma vs Normal", RegulonList = ac.vs.norm$gene)
+ansEA.scc.norm <- TCGAanalyze_EAcomplete(TFname="DEA genes of SCC vs Normal", RegulonList = scc.vs.norm$gene)
+
+```
+
+```{r echo=FALSE, warning=FALSE}
 
 p3 <- ggplot(ac.vs.scc, aes(avg_logFC, -log10( p_val_adj) ))+
   geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
@@ -39,4 +40,55 @@ p3 <- ggplot(ac.vs.scc, aes(avg_logFC, -log10( p_val_adj) ))+
 ggplotly(p3)
 ```
 
+```{r echo=FALSE, warning=FALSE, fig.height=16, fig.width=16}
 
+TCGAvisualize_EAbarplot(tf = rownames(ansEA.ac.scc$ResBP),
+                        filename = NULL,
+                        GOBPTab = ansEA.ac.scc$ResBP,
+                        GOCCTab = ansEA.ac.scc$ResCC,
+                        GOMFTab = ansEA.ac.scc$ResMF,
+                        PathTab = ansEA.ac.scc$ResPat,
+                        nRGTab = ac.vs.scc$gene,
+                        nBar = 20)
+```
+
+```{r echo=FALSE, warning=FALSE}
+
+p2 <- ggplot(ac.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
+  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
+  scale_color_gradient(low="darkgreen", high="lightblue")+
+  labs(title="AC vs Normal")
+ggplotly(p2)
+```
+
+```{r echo=FALSE, warning=FALSE, fig.height=16, fig.width=16}
+
+TCGAvisualize_EAbarplot(tf = rownames(ansEA.ac.norm$ResBP),
+                        filename = NULL,
+                        GOBPTab = ansEA.ac.norm$ResBP,
+                        GOCCTab = ansEA.ac.norm$ResCC,
+                        GOMFTab = ansEA.ac.norm$ResMF,
+                        PathTab = ansEA.ac.norm$ResPat,
+                        nRGTab = ac.vs.norm$gene,
+                        nBar = 20)
+```
+
+```{r echo=FALSE, warning=FALSE}
+p1 <- ggplot(scc.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
+  geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
+  scale_color_gradient(low="lightblue", high="red")+
+  labs(title="Normal vs SCC")
+ggplotly(p1)
+```
+
+```{r echo=FALSE, warning=FALSE, fig.height=16, fig.width=16}
+
+TCGAvisualize_EAbarplot(tf = rownames(ansEA.scc.norm$ResBP),
+                        filename = NULL,
+                        GOBPTab = ansEA.scc.norm$ResBP,
+                        GOCCTab = ansEA.scc.norm$ResCC,
+                        GOMFTab = ansEA.scc.norm$ResMF,
+                        PathTab = ansEA.scc.norm$ResPat,
+                        nRGTab = scc.vs.norm$gene,
+                        nBar = 20)
+```
