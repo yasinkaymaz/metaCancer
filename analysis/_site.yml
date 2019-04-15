@@ -7,6 +7,10 @@ navbar:
     href: index.html
   - text: About
     href: about.html
+  - text: Dimension Reduction
+    href: DimensionReduction_Clustering.html
+  - text: DEG Analysis
+    href: DEG_analysis.html
   - text: License
     href: license.html
 output:
