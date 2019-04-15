@@ -18,7 +18,7 @@ source("https://raw.githubusercontent.com/yasinkaymaz/cellRtools/master/main/fun
 load("~/data/TCGA/DEGs.paired.Rdata")
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 #Plots
 p1 <- ggplot(scc.vs.norm, aes(avg_logFC, -log10( p_val_adj) ))+
   geom_point(aes(color=avg_logFC,text=sprintf("Gene: %s", gene) ))+
